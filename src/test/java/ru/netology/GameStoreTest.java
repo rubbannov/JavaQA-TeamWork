@@ -16,6 +16,15 @@ public class GameStoreTest {
     }
 
     @Test
+    public void shouldAddGameAlreadyExistException() {
+//        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+//
+//        Assertions.assertThrows(AlreadyExistException.class ()->{
+//            Game game2 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+//        });
+    }
+
+    @Test
     void addPlayTime() {
         store.addPlayTime("Player1", 100);
         store.addPlayTime("Player1", 200);
@@ -39,9 +48,5 @@ public class GameStoreTest {
         store.addPlayTime("Player2", 200);
         store.addPlayTime("Player3", 300);
         Assertions.assertEquals(300 + 200 + 100, store.getSumPlayedTime());
-    }
-
-    @Test
-    void containsGame() {
     }
 }
