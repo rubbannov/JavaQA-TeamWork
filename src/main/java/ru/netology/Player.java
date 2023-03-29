@@ -1,5 +1,7 @@
 package ru.netology;
 
+import ru.netology.exceptions.AlreadyExistException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +27,12 @@ public class Player {
     /** добавление игры игроку
     если игра уже была, никаких изменений происходить не должно */
     public void installGame(Game game) {
-        playedTime.put(game, 0); //Не дописана функция проверки игры на наличие у игрока
+        if (!playedTime.containsKey(game)) {
+            playedTime.put(game, 0); //Не дописана функция проверки игры на наличие у игрока
+        } else {throw new AlreadyExistException(
+               "Game" + game.getTitle() + "already installed"
+            );
+        }
     }
 
     /** игрок играет в игру game на протяжении hours часов
