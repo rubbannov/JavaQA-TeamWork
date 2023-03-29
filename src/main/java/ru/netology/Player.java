@@ -4,6 +4,7 @@ import ru.netology.exceptions.AlreadyExistException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Player {
     private String name;
@@ -68,5 +69,10 @@ public class Player {
      Если в игры этого жанра не играли, возвращается null */
     public Game mostPlayerByGenre(String genre) {//нереализованная функция
         return null;
+    }
+    public Set<Game> allGames (){
+        Set<Game> games = playedTime.keySet();
+//        Game[] gameArray = games.toArray();  //Я сходу не разобрался как вернуть массив, но
+        return games;                          // со списком работать уджобне, написал на этот метод тест
     }
 }

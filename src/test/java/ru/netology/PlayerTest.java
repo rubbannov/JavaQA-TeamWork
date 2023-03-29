@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class PlayerTest {
     GameStore store = new GameStore();
     Player player = new Player("Nagibator777");
@@ -26,7 +30,19 @@ public class PlayerTest {
         player.installGame(game5);
     }
 
-//    @Test
+    @Test
+    void allGamesTest() {
+        Set<Game> expected = new HashSet<>();
+        expected.add(game1);
+        expected.add(game2);
+        expected.add(game3);
+        expected.add(game4);
+        expected.add(game5);
+
+        assertEquals(expected, player.allGames());
+    }
+
+    //    @Test
 //    public void testInstallGame() {
 //        Game[] expected = {game1, game2, game3, game4, game5};
 //        Game[] actual =
