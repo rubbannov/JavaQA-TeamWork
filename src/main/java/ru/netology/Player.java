@@ -83,7 +83,13 @@ public class Player {
      * Если в игры этого жанра не играли, возвращается null
      */
     public Game mostPlayerByGenre(String genre) {//нереализованная функция
-        return null;
+        int mostTimePlayed = 0;
+        Game mostPlayedGame = null;
+        for (Map.Entry<Game, Integer> item : playedTime.entrySet()) {
+            if (item.getValue() > mostTimePlayed)
+                mostPlayedGame = item.getKey();
+        }
+        return mostPlayedGame;
     }
 
     public Set<Game> allGames() {
