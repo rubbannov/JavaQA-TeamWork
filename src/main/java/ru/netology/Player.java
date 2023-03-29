@@ -100,4 +100,13 @@ public class Player {
 //        Game[] gameArray = games.toArray();  //Я сходу не разобрался как вернуть массив, но
         return games;                          // со списком работать уджобне, написал на этот метод тест
     }
+    public void deleteGame(Game game){
+        if (!playedTime.containsKey(game)) {
+            playedTime.remove(game);
+        } else {
+            throw new AlreadyExistException(
+                    "Game" + game.getTitle() + "already installed"
+            );
+        }
+    }
 }
