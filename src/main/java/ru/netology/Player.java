@@ -44,7 +44,7 @@ public class Player {
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game));// playedTime.get(game) + hours
+            playedTime.put(game, playedTime.get(game) + hours);// playedTime.get(game) + hours
         } else {
             playedTime.put(game, hours);//Вместо этой строки exception
         }
@@ -71,7 +71,7 @@ public class Player {
         return null;
     }
     public Set<Game> allGames (){
-        Set<Game> games = playedTime.keySet();
+        Set<Game> games = playedTime.keySet();  // todo Убрать лишнее объявление переменной для упрощения кода
 //        Game[] gameArray = games.toArray();  //Я сходу не разобрался как вернуть массив, но
         return games;                          // со списком работать уджобне, написал на этот метод тест
     }
