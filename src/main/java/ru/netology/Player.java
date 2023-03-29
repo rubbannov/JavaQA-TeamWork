@@ -5,6 +5,7 @@ import ru.netology.exceptions.GameNotInstalled;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Player {
@@ -86,8 +87,10 @@ public class Player {
         int mostTimePlayed = 0;
         Game mostPlayedGame = null;
         for (Map.Entry<Game, Integer> item : playedTime.entrySet()) {
-            if (item.getValue() > mostTimePlayed)
-                mostPlayedGame = item.getKey();
+            if (Objects.equals(item.getKey().getGenre(), genre)) {
+                if (item.getValue() > mostTimePlayed)
+                    mostPlayedGame = item.getKey();
+            }
         }
         return mostPlayedGame;
     }

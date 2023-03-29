@@ -104,14 +104,16 @@ public class PlayerTest {
         assertArrayEquals(expected, actual);
     }
     @Test
-    public void testMostPlayerByGenreIfDoesNotPlay() {
+    public void testMostPlayerByGenreIfDoesNotPlay() {   //Мне пришлось исправить тест, чтобы разобраться.
+                                                         // метод возвращает не массив Game[] а объкет Game.
+                                                         // (Можно было бы сделать assertNull)
         player.play(game4,10);
         player.play(game5, 6);
 
-        Game[] expected = null;
-        Game[] actual = {player.mostPlayerByGenre("Шутер")};
+        Game expected = null;
+        Game actual = player.mostPlayerByGenre("Шутер");
 
-        assertArrayEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
 }
