@@ -69,8 +69,6 @@ public class Player {
         for (Game game : playedTime.keySet()) {
             if (game.getGenre().equals(genre)) {
                 sum += playedTime.get(game);
-            } else {
-                sum = 0;
             }
         }
         return sum;
@@ -93,9 +91,7 @@ public class Player {
     }
 
     public Set<Game> allGames() {
-        Set<Game> games = playedTime.keySet();  // todo Убрать лишнее объявление переменной для упрощения кода
-//        Game[] gameArray = games.toArray();  //Я сходу не разобрался как вернуть массив, но
-        return games;                          // со списком работать уджобне, написал на этот метод тест
+        return playedTime.keySet();
     }
     public void deleteGame(Game game){
         if (!playedTime.containsKey(game)) {
