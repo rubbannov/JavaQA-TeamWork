@@ -2,6 +2,7 @@ package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,11 +43,7 @@ public class PlayerTest {
         assertEquals(expected, player.allGames());
     }
 
-    //    @Test
-//    public void testInstallGame() {
-//        Game[] expected = {game1, game2, game3, game4, game5};
-//        Game[] actual =
-//    }
+
     @Test
     public void testPlayGame() {
 
@@ -114,6 +111,32 @@ public class PlayerTest {
         Game actual = player.mostPlayerByGenre("Шутер");
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDeleteGame() {
+
+        player.deleteGame(game3);
+        Set<Game> expected = new HashSet<>();
+        expected.add(game1);
+        expected.add(game2);
+        expected.add(game4);
+        expected.add(game5);
+
+        assertEquals(expected, player.allGames());
+    }
+
+    @Test
+    public void testDeleteFewGame() {
+
+        player.deleteGame(game3);
+        player.deleteGame(game4);
+        Set<Game> expected = new HashSet<>();
+        expected.add(game1);
+        expected.add(game2);
+        expected.add(game5);
+
+        assertEquals(expected, player.allGames());
     }
 
 }

@@ -22,9 +22,6 @@ public class Player {
         this.name = name;
     }
 
-    //Нет функции вывода списка уже установленных игр для тестов
-    //Также нет функции удаления игры
-
     public String getName() {
         return name;
     }
@@ -35,7 +32,7 @@ public class Player {
      */
     public void installGame(Game game) {
         if (!playedTime.containsKey(game)) {
-            playedTime.put(game, 0); //Не дописана функция проверки игры на наличие у игрока
+            playedTime.put(game, 0);
         } else {
             throw new AlreadyExistException(
                     "Game" + game.getTitle() + "already installed"
@@ -53,7 +50,7 @@ public class Player {
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game) + hours);// playedTime.get(game) + hours
+            playedTime.put(game, playedTime.get(game) + hours);
         } else {
             throw new GameNotInstalled(
                     "Game " + game.getTitle() + "was not installed"
@@ -67,7 +64,7 @@ public class Player {
      * Метод принимает жанр игры (одно из полей объекта игры) и
      * суммирует время, проигранное во все игры этого жанра этим игроком
      */
-    public int sumGenre(String genre) {//
+    public int sumGenre(String genre) {
         int sum = 0;
         for (Game game : playedTime.keySet()) {
             if (game.getGenre().equals(genre)) {
@@ -83,7 +80,7 @@ public class Player {
      * Метод принимает жанр и возвращает игру этого жанра, в которую играли больше всего
      * Если в игры этого жанра не играли, возвращается null
      */
-    public Game mostPlayerByGenre(String genre) {//нереализованная функция
+    public Game mostPlayerByGenre(String genre) {
         int mostTimePlayed = 0;
         Game mostPlayedGame = null;
         for (Map.Entry<Game, Integer> item : playedTime.entrySet()) {
