@@ -2,6 +2,7 @@ package ru.netology;
 
 import ru.netology.exceptions.AlreadyExistException;
 import ru.netology.exceptions.GameNotInstalled;
+import ru.netology.exceptions.HoursMustBePositiveException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,14 +51,15 @@ public class Player {
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game) + hours);
+            if (hours > 0) {
+                playedTime.put(game, playedTime.get(game) + hours);
+            } else {
+                throw new HoursMustBePositiveException(hours);
+            }
         } else {
-            throw new GameNotInstalled(
-                    "Game " + game.getTitle() + "was not installed"
-            );
+            throw new GameNotInstalled(game.getTitle());
         }
         return playedTime.get(game);
-
     }
 
     /**
@@ -93,7 +95,8 @@ public class Player {
     public Set<Game> allGames() {
         return playedTime.keySet();
     }
-    public void deleteGame(Game game){
+
+    public void deleteGame(Game game) {
         if (!playedTime.containsKey(game)) {
             playedTime.remove(game);
         } else {
