@@ -100,8 +100,8 @@ public class Player {
         if (playedTime.containsKey(game)) {
             playedTime.remove(game);
         } else {
-            throw new AlreadyExistException(
-                    "Game" + game.getTitle() + "already installed"
+            throw new GameNotInstalled(
+                    game.getTitle()
             );
         }
     }

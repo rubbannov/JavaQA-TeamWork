@@ -2,9 +2,9 @@ package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.exceptions.GameNotInstalled;
 
 
 import java.util.HashSet;
@@ -43,6 +43,12 @@ public class PlayerTest {
         assertEquals(expected, player.allGames());
     }
 
+    @Test
+    void allGamesNogames() {
+        Player NoGamesPlayer = new Player("NoGamesPlayer");
+        Set<Game> expected = new HashSet<>();
+        assertEquals(expected, NoGamesPlayer.allGames());
+    }
 
     @Test
     public void testPlayGame() {
@@ -91,26 +97,33 @@ public class PlayerTest {
         assertEquals(expected, actual);
     }
     @Test
+    public void testSumGenreIfNoSuchGenre() {
+        player.play(game4,3);
+        player.play(game5, 2);
+        player.play(game3, 3);
+
+        int expected = 0;
+        int actual = player.sumGenre("NoGenre");
+        assertEquals(expected, actual);
+    }
+    @Test
     public void testMostPlayerByGenre() {
         player.play(game4,10);
         player.play(game5, 6);
+//        Метод возвращает объект Game, создавать массив излишне.
+//        Game[] expected = {game4};
+//        Game[] actual = new Game[]{player.mostPlayerByGenre("RPG")};
+//
+//        assertArrayEquals(expected, actual);
 
-        Game[] expected = {game4};
-        Game[] actual = new Game[]{player.mostPlayerByGenre("RPG")};
-
-        assertArrayEquals(expected, actual);
+        assertEquals(game4, player.mostPlayerByGenre("RPG")); // Я бы записал так
     }
     @Test
-    public void testMostPlayerByGenreIfDoesNotPlay() {   //Мне пришлось исправить тест, чтобы разобраться.
-                                                         // метод возвращает не массив Game[] а объкет Game.
-                                                         // (Можно было бы сделать assertNull)
+    public void testMostPlayerByGenreIfDoesNotPlay() {
         player.play(game4,10);
         player.play(game5, 6);
 
-        Game expected = null;
-        Game actual = player.mostPlayerByGenre("Шутер");
-
-        assertEquals(expected, actual);
+        assertNull(player.mostPlayerByGenre("Шутер"));
     }
 
     @Test
@@ -139,4 +152,11 @@ public class PlayerTest {
         assertEquals(expected, player.allGames());
     }
 
+    @Test
+    void deleteGameException() {
+        Game game0 = new Game("NoSuchGame", "NoSuchGenre", store);
+        assertThrows(GameNotInstalled.class, ()->{
+            player.deleteGame(game0);
+        });
+    }
 }
