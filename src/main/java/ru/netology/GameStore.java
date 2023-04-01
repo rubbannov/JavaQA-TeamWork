@@ -44,10 +44,20 @@ public class GameStore {
      * суммироваться с прошлым значением для этого игрока
      */
     public void addPlayTime(String playerName, int hours) {
-        if (playedTime.containsKey(playerName)) {
-            playedTime.put(playerName, playedTime.get(playerName));
+        if (hours < 0) {
+            return;
+        } else if (playedTime.containsKey(playerName)) {
+            playedTime.put(playerName, playedTime.get(playerName) + hours);
         } else {
             playedTime.put(playerName, hours);
+        }
+    }
+
+    public int getTimePlayer(String playerName) {
+        if (playedTime.containsKey(playerName)) {
+            return playedTime.get(playerName);
+        } else {
+            return Integer.parseInt(null);
         }
     }
 

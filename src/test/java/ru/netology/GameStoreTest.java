@@ -36,7 +36,7 @@ public class GameStoreTest {
         store.addPlayTime("Player1", 200);
         store.addPlayTime("Player1", 300);
 
-        // assertEquals(100 + 200 + 300, store.getTimePlayed("Player1"));
+        assertEquals(100 + 200 + 300, store.getTimePlayer("Player1"));
     }
 
     @Test
