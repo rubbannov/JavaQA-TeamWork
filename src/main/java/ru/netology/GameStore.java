@@ -1,5 +1,7 @@
 package ru.netology;
 
+import ru.netology.exceptions.AlreadyExistException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +23,14 @@ public class GameStore {
      */
     public Game publishGame(String title, String genre) {
         Game game = new Game(title, genre, this);
-        games.add(game);
-        return game;
+        if (!games.contains(game)) {
+            games.add(game);
+            return game;
+        } else {
+            throw new AlreadyExistException(
+                    "Game" + game.getTitle() + "already published"
+            );
+        }
     }
 
     /**
