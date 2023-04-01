@@ -97,7 +97,7 @@ public class Player {
     }
 
     public void deleteGame(Game game) {
-        if (!playedTime.containsKey(game)) {
+        if (playedTime.containsKey(game)) {
             playedTime.remove(game);
         } else {
             throw new AlreadyExistException(
