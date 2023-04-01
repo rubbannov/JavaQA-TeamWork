@@ -1,6 +1,7 @@
 package ru.netology;
 
 import ru.netology.exceptions.AlreadyExistException;
+import ru.netology.exceptions.PlayerNotRegisteredExeption;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class GameStore {
         if (playedTime.containsKey(playerName)) {
             return playedTime.get(playerName);
         } else {
-            return Integer.parseInt(null);
+            throw new PlayerNotRegisteredExeption(playerName);
         }
     }
 
@@ -97,4 +98,6 @@ public class GameStore {
         }
         return sum;
     }
+
+
 }
