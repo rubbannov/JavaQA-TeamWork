@@ -1,23 +1,162 @@
 package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.exceptions.GameNotInstalled;
+
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class PlayerTest {
+    GameStore store = new GameStore();
+    Player player = new Player("Nagibator777");
 
-    @Test
-    public void shouldSumGenreIfOneGame() {
-        GameStore store = new GameStore();
-        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+    Game game1 = store.publishGame("PUBG", "Battle Royal");
+    Game game2 = store.publishGame("CS GO", "Шутер");
+    Game game3 = store.publishGame("RDR 2", "Action-adventure");
+    Game game4 = store.publishGame("Witcher 3", "RPG");
+    Game game5 = store.publishGame("TES V: Skyirm", "RPG");
+    Game game6 = store.publishGame("CyberPunk 2077", "Action-adventure");
 
-        Player player = new Player("Petya");
-        player.installGame(game);
-        player.play(game, 3);
 
-        int expected = 3;
-        int actual = player.sumGenre(game.getGenre());
-        assertEquals(expected, actual);
+    @BeforeEach
+    public void setUp() {
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.installGame(game4);
+        player.installGame(game5);
     }
 
-    // другие ваши тесты
+    @Test
+    void allGamesTest() {
+        Set<Game> expected = new HashSet<>();
+        expected.add(game1);
+        expected.add(game2);
+        expected.add(game3);
+        expected.add(game4);
+        expected.add(game5);
+
+        assertEquals(expected, player.allGames());
+    }
+
+    @Test
+    void allGamesNogames() {
+        Player NoGamesPlayer = new Player("NoGamesPlayer");
+        Set<Game> expected = new HashSet<>();
+        assertEquals(expected, NoGamesPlayer.allGames());
+    }
+
+    @Test
+    public void testPlayGame() {
+
+        int expected = 3;
+        int actual = player.play(game1, 3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void testUninstalledPlayGame() {
+        assertThrows(RuntimeException.class, () -> {
+            player.play(game6, 2);
+        });
+    }
+    @Test
+    public void testNegativeHoursPlayGame() {
+
+        assertThrows(RuntimeException.class, () -> {
+        player.play(game2, -3);
+        });
+    }
+    @Test
+    public void testAmountHoursPlayGame() {
+
+        int expected = 5;
+        int actual = player.play(game3, 3) + player.play(game4,2);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testSumGenreIfOneGame() {
+        player.play(game1, 3);
+
+        int expected = 3;
+        int actual = player.sumGenre(game1.getGenre());
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void testSumGenreIfFewGames() {
+        player.play(game4,3);
+        player.play(game5, 2);
+        player.play(game3, 3);
+
+        int expected = 5;
+        int actual = player.sumGenre("RPG");
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void testSumGenreIfNoSuchGenre() {
+        player.play(game4,3);
+        player.play(game5, 2);
+        player.play(game3, 3);
+
+        int expected = 0;
+        int actual = player.sumGenre("NoGenre");
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void testMostPlayerByGenre() {
+        player.play(game4,10);
+        player.play(game5, 6);
+//        Метод возвращает объект Game, создавать массив излишне.
+//        Game[] expected = {game4};
+//        Game[] actual = new Game[]{player.mostPlayerByGenre("RPG")};
+//
+//        assertArrayEquals(expected, actual);
+
+        assertEquals(game4, player.mostPlayerByGenre("RPG")); // Я бы записал так
+    }
+    @Test
+    public void testMostPlayerByGenreIfDoesNotPlay() {
+        player.play(game4,10);
+        player.play(game5, 6);
+
+        assertNull(player.mostPlayerByGenre("Шутер"));
+    }
+
+    @Test
+    public void testDeleteGame() {
+
+        player.deleteGame(game3);
+        Set<Game> expected = new HashSet<>();
+        expected.add(game1);
+        expected.add(game2);
+        expected.add(game4);
+        expected.add(game5);
+
+        assertEquals(expected, player.allGames());
+    }
+
+    @Test
+    public void testDeleteFewGame() {
+
+        player.deleteGame(game3);
+        player.deleteGame(game4);
+        Set<Game> expected = new HashSet<>();
+        expected.add(game1);
+        expected.add(game2);
+        expected.add(game5);
+
+        assertEquals(expected, player.allGames());
+    }
+
+    @Test
+    void deleteGameException() {
+        Game game0 = new Game("NoSuchGame", "NoSuchGenre", store);
+        assertThrows(GameNotInstalled.class, ()->{
+            player.deleteGame(game0);
+        });
+    }
 }
