@@ -1,5 +1,9 @@
 package ru.netology;
 
+import ru.netology.exceptions.AlreadyExistException;
+import ru.netology.exceptions.HoursMustBePositiveException;
+import ru.netology.exceptions.PlayerNotRegisteredExeption;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,17 +25,23 @@ public class GameStore {
      */
     public Game publishGame(String title, String genre) {
         Game game = new Game(title, genre, this);
-        games.add(game);
-        return game;
+        if (!games.contains(game)) {
+            games.add(game);
+            return game;
+        } else {
+            throw new AlreadyExistException(
+                    "Game" + game.getTitle() + "already published"
+            );
+        }
     }
 
     /**
-     * Проверяет наличие игры в каталоге и возврашает true
+     * Проверяет наличие игры в каталоге и возвращает true
      * если игра есть и false иначе
      */
     public boolean containsGame(Game game) {
-        for (int i = 1; i < games.size(); i++) {
-            if (games.get(i - 1).equals(game)) {
+        for (int i = 0; i < games.size(); i++) {
+            if (games.get(i).equals(game)) {
                 return true;
             }
         }
@@ -44,10 +54,20 @@ public class GameStore {
      * суммироваться с прошлым значением для этого игрока
      */
     public void addPlayTime(String playerName, int hours) {
-        if (playedTime.containsKey(playerName)) {
-            playedTime.put(playerName, playedTime.get(playerName));
+        if (hours < 0) {
+            throw new HoursMustBePositiveException(hours);
+        } else if (playedTime.containsKey(playerName)) {
+            playedTime.put(playerName, playedTime.get(playerName) + hours);
         } else {
             playedTime.put(playerName, hours);
+        }
+    }
+
+    public int getTimePlayer(String playerName) {
+        if (playedTime.containsKey(playerName)) {
+            return playedTime.get(playerName);
+        } else {
+            throw new PlayerNotRegisteredExeption(playerName);
         }
     }
 
@@ -73,6 +93,12 @@ public class GameStore {
      * за играми этого каталога
      */
     public int getSumPlayedTime() {
-        return 0;
+        int sum = 0;
+        for (Map.Entry<String, Integer> entry : playedTime.entrySet()) {
+            sum = sum + entry.getValue();
+        }
+        return sum;
     }
+
+
 }
