@@ -1,6 +1,7 @@
 package ru.netology;
 
 import ru.netology.exceptions.AlreadyExistException;
+import ru.netology.exceptions.HoursMustBePositiveException;
 import ru.netology.exceptions.PlayerNotRegisteredExeption;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class GameStore {
      */
     public void addPlayTime(String playerName, int hours) {
         if (hours < 0) {
-            return;
+            throw new HoursMustBePositiveException(hours);
         } else if (playedTime.containsKey(playerName)) {
             playedTime.put(playerName, playedTime.get(playerName) + hours);
         } else {
