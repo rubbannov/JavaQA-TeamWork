@@ -85,6 +85,7 @@ public class Player {
             if (Objects.equals(item.getKey().getGenre(), genre)) {
                 if (item.getValue() > mostTimePlayed)
                     mostPlayedGame = item.getKey();
+                    mostTimePlayed = item.getValue();
             }
         }
         return mostPlayedGame;

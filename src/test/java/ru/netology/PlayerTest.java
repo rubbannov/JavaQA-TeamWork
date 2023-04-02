@@ -110,13 +110,7 @@ public class PlayerTest {
     public void testMostPlayerByGenre() {
         player.play(game4,10);
         player.play(game5, 6);
-//        Метод возвращает объект Game, создавать массив излишне.
-//        Game[] expected = {game4};
-//        Game[] actual = new Game[]{player.mostPlayerByGenre("RPG")};
-//
-//        assertArrayEquals(expected, actual);
-
-        assertEquals(game4, player.mostPlayerByGenre("RPG")); // Я бы записал так
+        assertEquals(game4, player.mostPlayerByGenre("RPG"));
     }
     @Test
     public void testMostPlayerByGenreIfDoesNotPlay() {
