@@ -1,7 +1,7 @@
 package ru.netology;
 
-import ru.netology.exceptions.AlreadyExistException;
-import ru.netology.exceptions.HoursMustBePositiveException;
+import ru.netology.exceptions.GameAlreadyExistException;
+import ru.netology.exceptions.HoursMustBePositiveGamesStoreException;
 import ru.netology.exceptions.PlayerNotRegisteredExeption;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class GameStore {
             games.add(game);
             return game;
         } else {
-            throw new AlreadyExistException(
+            throw new GameAlreadyExistException(
                     "Game" + game.getTitle() + "already published"
             );
         }
@@ -55,7 +55,7 @@ public class GameStore {
      */
     public void addPlayTime(String playerName, int hours) {
         if (hours < 0) {
-            throw new HoursMustBePositiveException(hours);
+            throw new HoursMustBePositiveGamesStoreException(hours);
         } else if (playedTime.containsKey(playerName)) {
             playedTime.put(playerName, playedTime.get(playerName) + hours);
         } else {

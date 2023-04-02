@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.netology.exceptions.AlreadyExistException;
+import ru.netology.exceptions.GameAlreadyExistException;
 import ru.netology.exceptions.PlayerNotRegisteredExeption;
 
 public class GameStoreTest {
@@ -28,7 +28,7 @@ public class GameStoreTest {
         store.publishGame("Нетология Баттл Онлайн", "Аркады");
 
 
-        Assertions.assertThrows(AlreadyExistException.class, () -> {
+        Assertions.assertThrows(GameAlreadyExistException.class, () -> {
             store.publishGame("Нетология Баттл Онлайн", "Аркады");
         });
     }
