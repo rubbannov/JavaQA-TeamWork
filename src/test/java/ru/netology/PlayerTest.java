@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.exceptions.AlreadyExistException;
 import ru.netology.exceptions.GameNotInstalled;
+import ru.netology.exceptions.HoursMustBePositiveGamesStoreException;
 
 
 import java.util.HashSet;
@@ -44,7 +46,19 @@ public class PlayerTest {
     }
 
     @Test
-    void allGamesNogames() {
+    void getNameTest() {
+        assertEquals("Nagibator777", player.getName());
+    }
+
+    @Test
+    void installGameAlreadyExicstException() {
+        assertThrows(AlreadyExistException.class, () -> {
+            player.installGame(game3);
+        });
+    }
+
+    @Test
+    void allGamesNoGames() {
         Player NoGamesPlayer = new Player("NoGamesPlayer");
         Set<Game> expected = new HashSet<>();
         assertEquals(expected, NoGamesPlayer.allGames());
@@ -55,27 +69,28 @@ public class PlayerTest {
 
         int expected = 3;
         int actual = player.play(game1, 3);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
+
     @Test
     public void testUninstalledPlayGame() {
         assertThrows(RuntimeException.class, () -> {
             player.play(game6, 2);
         });
     }
+
     @Test
     public void testNegativeHoursPlayGame() {
-
-        assertThrows(RuntimeException.class, () -> {
-        player.play(game2, -3);
+        assertThrows(HoursMustBePositiveGamesStoreException.class, () -> {
+            player.play(game2, -1);
         });
     }
     @Test
     public void testAmountHoursPlayGame() {
 
         int expected = 5;
-        int actual = player.play(game3, 3) + player.play(game4,2);
-        assertEquals(expected,actual);
+        int actual = player.play(game3, 3) + player.play(game4, 2);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -86,9 +101,10 @@ public class PlayerTest {
         int actual = player.sumGenre(game1.getGenre());
         assertEquals(expected, actual);
     }
+
     @Test
     public void testSumGenreIfFewGames() {
-        player.play(game4,3);
+        player.play(game4, 3);
         player.play(game5, 2);
         player.play(game3, 3);
 
@@ -96,9 +112,10 @@ public class PlayerTest {
         int actual = player.sumGenre("RPG");
         assertEquals(expected, actual);
     }
+
     @Test
     public void testSumGenreIfNoSuchGenre() {
-        player.play(game4,3);
+        player.play(game4, 3);
         player.play(game5, 2);
         player.play(game3, 3);
 
@@ -106,15 +123,17 @@ public class PlayerTest {
         int actual = player.sumGenre("NoGenre");
         assertEquals(expected, actual);
     }
+
     @Test
     public void testMostPlayerByGenre() {
-        player.play(game4,10);
+        player.play(game4, 10);
         player.play(game5, 6);
         assertEquals(game4, player.mostPlayerByGenre("RPG"));
     }
+
     @Test
     public void testMostPlayerByGenreIfDoesNotPlay() {
-        player.play(game4,10);
+        player.play(game4, 10);
         player.play(game5, 6);
 
         assertNull(player.mostPlayerByGenre("Шутер"));
@@ -149,7 +168,7 @@ public class PlayerTest {
     @Test
     void deleteGameException() {
         Game game0 = new Game("NoSuchGame", "NoSuchGenre", store);
-        assertThrows(GameNotInstalled.class, ()->{
+        assertThrows(GameNotInstalled.class, () -> {
             player.deleteGame(game0);
         });
     }

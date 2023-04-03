@@ -12,7 +12,9 @@ public class GameStoreTest {
 
     @Test
     public void shouldAddGame() { //Добавление игры
+        Game game1 = store.publishGame("TestGame2", "Аркады");
         Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+
 
         assertTrue(store.containsGame(game)); // и поиск игры в списке
     }
@@ -68,6 +70,11 @@ public class GameStoreTest {
 
         Assertions.assertEquals("Player3", store.getMostPlayer());
     }
+//    @Test
+//    void getMostPlayerWhenFirstIsTrue() { //Ситуация, когда лучший игрок наиграл только 1 час.
+//        store.addPlayTime("Player3", 1);
+//        Assertions.assertEquals("Player1", store.getMostPlayer());
+//    }
 
 
     @Test

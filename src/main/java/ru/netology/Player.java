@@ -2,7 +2,7 @@ package ru.netology;
 
 import ru.netology.exceptions.AlreadyExistException;
 import ru.netology.exceptions.GameNotInstalled;
-import ru.netology.exceptions.HoursMustBePositiveException;
+import ru.netology.exceptions.HoursMustBePositiveGamesStoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +52,7 @@ public class Player {
             if (hours > 0) {
                 playedTime.put(game, playedTime.get(game) + hours);
             } else {
-                throw new HoursMustBePositiveException(hours);
+                throw new HoursMustBePositiveGamesStoreException(hours);
             }
         } else {
             throw new GameNotInstalled(game.getTitle());
